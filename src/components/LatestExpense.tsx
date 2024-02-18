@@ -21,7 +21,20 @@ export default function LatestExpense() {
 		return <ErrorAlert />;
 	}
 
-	return <main className={`${inter.className}`}>{JSON.stringify(data)}</main>;
+	return (
+		<main className={`${inter.className}`}>
+			{data.map((val: string, idx: number) => {
+				return (
+					<h3
+						className="scroll-m-20 text-2xl font-semibold tracking-tight"
+						key={idx}
+					>
+						{val}
+					</h3>
+				);
+			})}
+		</main>
+	);
 }
 
 const ErrorAlert = () => {
