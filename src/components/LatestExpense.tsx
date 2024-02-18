@@ -11,6 +11,7 @@ export default function LatestExpense() {
 	const { data, isSuccess, isError } = useQuery({
 		queryKey: [LATEST_EXPENSE_KEY],
 		queryFn: getLatestExpense,
+		staleTime: Infinity,
 	});
 
 	function getLatestExpense() {
