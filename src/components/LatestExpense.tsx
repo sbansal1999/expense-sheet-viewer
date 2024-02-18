@@ -17,6 +17,10 @@ export default function LatestExpense() {
 		return axios.get("/api/sheets").then((res) => res.data);
 	}
 
+	if (isError) {
+		return <ErrorAlert />;
+	}
+
 	if (isSuccess) {
 		return (
 			<main className={`${inter.className}`}>
@@ -34,10 +38,18 @@ export default function LatestExpense() {
 		);
 	}
 
-	return <ErrorAlert />;
+	return <LoadingState />;
 }
 
-const ErrorAlert = () => {
+function LoadingState() {
+	return (
+		<h3 className="scroll-m-20 text-yellow-600 font-semibold tracking-tight">
+			Loading...
+		</h3>
+	);
+}
+
+function ErrorAlert() {
 	return (
 		<Alert variant={"destructive"}>
 			<ExclamationTriangleIcon className="h-4 w-4" />
@@ -47,4 +59,4 @@ const ErrorAlert = () => {
 			</AlertDescription>
 		</Alert>
 	);
-};
+}
