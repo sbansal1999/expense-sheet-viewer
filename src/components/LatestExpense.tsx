@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 const LATEST_EXPENSE_KEY = "latest_expense";
 
 export default function LatestExpense() {
-	const { data, isLoading, isError } = useQuery({
+	const { data, isSuccess, isError } = useQuery({
 		queryKey: [LATEST_EXPENSE_KEY],
 		queryFn: getLatestExpense,
 	});
@@ -17,24 +17,24 @@ export default function LatestExpense() {
 		return axios.get("/api/sheets").then((res) => res.data);
 	}
 
-	if (isError) {
-		return <ErrorAlert />;
+	if (isSuccess) {
+		return (
+			<main className={`${inter.className}`}>
+				{data.map((val: string, idx: number) => {
+					return (
+						<h3
+							className="scroll-m-20 text-2xl font-semibold tracking-tight"
+							key={idx}
+						>
+							{val}
+						</h3>
+					);
+				})}
+			</main>
+		);
 	}
 
-	return (
-		<main className={`${inter.className}`}>
-			{data.map((val: string, idx: number) => {
-				return (
-					<h3
-						className="scroll-m-20 text-2xl font-semibold tracking-tight"
-						key={idx}
-					>
-						{val}
-					</h3>
-				);
-			})}
-		</main>
-	);
+	return <ErrorAlert />;
 }
 
 const ErrorAlert = () => {
