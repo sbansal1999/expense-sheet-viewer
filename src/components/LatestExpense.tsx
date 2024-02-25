@@ -8,56 +8,56 @@ const inter = Inter({ subsets: ["latin"] });
 const LATEST_EXPENSE_KEY = "latest_expense";
 
 export default function LatestExpense() {
-	const { data, isSuccess, isError } = useQuery({
-		queryKey: [LATEST_EXPENSE_KEY],
-		queryFn: getLatestExpense,
-		staleTime: Infinity,
-	});
+  const { data, isSuccess, isError } = useQuery({
+    queryKey: [LATEST_EXPENSE_KEY],
+    queryFn: getLatestExpense,
+    staleTime: Infinity,
+  });
 
-	function getLatestExpense() {
-		return axios.get("/api/sheets").then((res) => res.data);
-	}
+  function getLatestExpense() {
+    return axios.get("/api/sheets").then((res) => res.data);
+  }
 
-	if (isError) {
-		return <ErrorAlert />;
-	}
+  if (isError) {
+    return <ErrorAlert />;
+  }
 
-	if (isSuccess) {
-		return (
-			<main className={`${inter.className}`}>
-				{data.map((val: string, idx: number) => {
-					return (
-						<h3
-							className="scroll-m-20 text-2xl font-semibold tracking-tight"
-							key={idx}
-						>
-							{val}
-						</h3>
-					);
-				})}
-			</main>
-		);
-	}
+  if (isSuccess) {
+    return (
+      <main className={`${inter.className}`}>
+        {data.map((val: string, idx: number) => {
+          return (
+            <h3
+              className="scroll-m-20 text-2xl font-semibold tracking-tight"
+              key={idx}
+            >
+              {val}
+            </h3>
+          );
+        })}
+      </main>
+    );
+  }
 
-	return <LoadingState />;
+  return <LoadingState />;
 }
 
 function LoadingState() {
-	return (
-		<h3 className="scroll-m-20 text-yellow-600 font-semibold tracking-tight">
-			Loading...
-		</h3>
-	);
+  return (
+    <h3 className="scroll-m-20 font-semibold tracking-tight text-yellow-600">
+      Loading...
+    </h3>
+  );
 }
 
 function ErrorAlert() {
-	return (
-		<Alert variant={"destructive"}>
-			<ExclamationTriangleIcon className="h-4 w-4" />
-			<AlertTitle>Error</AlertTitle>
-			<AlertDescription>
-				Something went wrong. Check the logs...
-			</AlertDescription>
-		</Alert>
-	);
+  return (
+    <Alert variant={"destructive"}>
+      <ExclamationTriangleIcon className="h-4 w-4" />
+      <AlertTitle>Error</AlertTitle>
+      <AlertDescription>
+        Something went wrong. Check the logs...
+      </AlertDescription>
+    </Alert>
+  );
 }
