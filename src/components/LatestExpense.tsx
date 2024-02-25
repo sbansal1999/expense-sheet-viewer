@@ -57,7 +57,9 @@ export default function LatestExpense() {
                       <p className="text-sm font-medium leading-none">
                         {data.schema[idx]}
                       </p>
-                      <p className="text-muted-foreground text-sm">{val}</p>
+                      <p className="text-muted-foreground text-sm">
+                        {getFormattedValue(data.schema[idx], val)}
+                      </p>
                     </div>
                   </div>
                 );
@@ -70,6 +72,23 @@ export default function LatestExpense() {
   }
 
   return <LoadingState />;
+}
+
+function getFormattedValue(type: string, value: string) {
+  if (type === "Timestamp") return getFormattedDate(value);
+  if (type === "Amount") return getFormattedAmount(value);
+  return value;
+}
+
+function getFormattedDate(dateString: string) {
+  return new Intl.DateTimeFormat("en-US", {
+    dateStyle: "long",
+    timeStyle: "medium",
+  }).format(new Date(dateString));
+}
+
+function getFormattedAmount(moneyString: string) {
+  return `₹ ${moneyString}`;
 }
 
 function LoadingState() {
