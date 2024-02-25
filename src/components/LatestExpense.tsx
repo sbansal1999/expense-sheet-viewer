@@ -3,9 +3,21 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 
 const inter = Inter({ subsets: ["latin"] });
 const LATEST_EXPENSE_KEY = "latest_expense";
+
+type SheetsResponse = {
+  schema: string[];
+  lastRow: string[];
+};
 
 export default function LatestExpense() {
   const { data, isSuccess, isError } = useQuery({
@@ -15,7 +27,7 @@ export default function LatestExpense() {
   });
 
   function getLatestExpense() {
-    return axios.get("/api/sheets").then((res) => res.data);
+    return axios.get<SheetsResponse>("/api/sheets").then((res) => res.data);
   }
 
   if (isError) {
@@ -25,16 +37,34 @@ export default function LatestExpense() {
   if (isSuccess) {
     return (
       <main className={`${inter.className}`}>
-        {data.map((val: string, idx: number) => {
-          return (
-            <h3
-              className="scroll-m-20 text-2xl font-semibold tracking-tight"
-              key={idx}
-            >
-              {val}
-            </h3>
-          );
-        })}
+        <div className="flex min-h-screen flex-col items-center justify-center">
+          <Card>
+            <CardHeader>
+              <CardTitle>Latest Expense</CardTitle>
+              <CardDescription>
+                Details related to your last expense
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {data.lastRow.map((val: string, idx: number) => {
+                return (
+                  <div
+                    key={idx}
+                    className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
+                  >
+                    <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+                    <div className="space-y-1">
+                      <p className="text-sm font-medium leading-none">
+                        {data.schema[idx]}
+                      </p>
+                      <p className="text-muted-foreground text-sm">{val}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </CardContent>
+          </Card>
+        </div>
       </main>
     );
   }
