@@ -1,4 +1,3 @@
-import { Inter } from "next/font/google";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
@@ -11,7 +10,6 @@ import {
   CardTitle,
 } from "./ui/card";
 
-const inter = Inter({ subsets: ["latin"] });
 const LATEST_EXPENSE_KEY = "latest_expense";
 
 type SheetsResponse = {
@@ -22,13 +20,10 @@ type SheetsResponse = {
 export default function LatestExpense() {
   const { data, isSuccess, isError } = useQuery({
     queryKey: [LATEST_EXPENSE_KEY],
-    queryFn: getLatestExpense,
+    queryFn: () =>
+      axios.get<SheetsResponse>("/api/sheets").then((res) => res.data),
     staleTime: Infinity,
   });
-
-  function getLatestExpense() {
-    return axios.get<SheetsResponse>("/api/sheets").then((res) => res.data);
-  }
 
   if (isError) {
     return <ErrorAlert />;
