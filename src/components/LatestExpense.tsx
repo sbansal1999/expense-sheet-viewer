@@ -21,7 +21,7 @@ export default function LatestExpense() {
   const { data, isSuccess, isError } = useQuery({
     queryKey: [LATEST_EXPENSE_KEY],
     queryFn: () =>
-      axios.get<SheetsResponse>("/api/sheets").then((res) => res.data),
+      axios.get<SheetsResponse>("/api/latestExpense").then((res) => res.data),
     staleTime: Infinity,
   });
 
