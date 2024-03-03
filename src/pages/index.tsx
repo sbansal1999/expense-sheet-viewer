@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "./../components/ui/card";
 import { ErrorAlert } from "./../components/ErrorAlert";
+import { LoadingState } from "./../components/LoadingState";
 
 const inter = Inter({ subsets: ["latin"] });
 const LATEST_EXPENSE_KEY = "latest_expense";
@@ -91,12 +92,4 @@ function getFormattedDate(dateString: string) {
 
 function getFormattedAmount(moneyString: string) {
   return `₹ ${moneyString}`;
-}
-
-function LoadingState() {
-  return (
-    <h3 className="scroll-m-20 font-semibold tracking-tight text-yellow-600">
-      Loading...
-    </h3>
-  );
 }
