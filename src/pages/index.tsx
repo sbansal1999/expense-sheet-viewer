@@ -1,8 +1,6 @@
 import { Inter } from "next/font/google";
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Alert, AlertDescription, AlertTitle } from "./../components/ui/alert";
 import {
   Card,
   CardContent,
@@ -10,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./../components/ui/card";
+import { ErrorAlert } from "./../components/ErrorAlert";
 
 const inter = Inter({ subsets: ["latin"] });
 const LATEST_EXPENSE_KEY = "latest_expense";
@@ -99,17 +98,5 @@ function LoadingState() {
     <h3 className="scroll-m-20 font-semibold tracking-tight text-yellow-600">
       Loading...
     </h3>
-  );
-}
-
-function ErrorAlert() {
-  return (
-    <Alert variant={"destructive"}>
-      <ExclamationTriangleIcon className="h-4 w-4" />
-      <AlertTitle>Error</AlertTitle>
-      <AlertDescription>
-        Something went wrong. Check the logs...
-      </AlertDescription>
-    </Alert>
   );
 }
