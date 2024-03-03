@@ -7,9 +7,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./../components/ui/card";
-import { ErrorAlert } from "./../components/ErrorAlert";
-import { LoadingState } from "./../components/LoadingState";
+} from "@/components/ui/card";
+import { ErrorAlert } from "@/components/ErrorAlert";
+import { LoadingState } from "@/components/LoadingState";
 
 const inter = Inter({ subsets: ["latin"] });
 const LATEST_EXPENSE_KEY = "latest_expense";
