@@ -58,7 +58,7 @@ const ExpensesSchema = z.array(
     title: z.string(),
     //TODO make this ENUM
     nature: z.string(),
-    amount: z.string(),
+    amount: z.number(),
     //TODO make this ENUM
     type: z.string(),
     paidFrom: z.string(),
@@ -82,7 +82,7 @@ function transformExpensesData(expenses: string[][]): ExpenseSchemaType[] {
       timeStamp: format(new Date(timeStamp), "LLL dd, y h:mm a"),
       title,
       nature,
-      amount,
+      amount: parseFloat(amount),
       type,
       paidFrom,
     };
