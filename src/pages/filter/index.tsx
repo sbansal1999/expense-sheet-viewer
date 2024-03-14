@@ -121,13 +121,13 @@ function FilterExpense() {
 
   return (
     <div className="m-4 flex flex-col gap-4">
-      <p className="text-center text-2xl capitalize tracking-tight text-blue-600 underline">
+      <p className="text-center ext-2xl capitalize tracking-tight text-blue-600 underline">
         Filter expenses by date
       </p>
-      <p className="tracking-tight">
+      <p className="text-center tracking-tight">
         Pick dates between which you want the expenses
       </p>
-      <div className="grid gap-2">
+      <div className="grid gap-2 justify-center">
         <Popover>
           <PopoverTrigger asChild>
             <Button
