@@ -71,7 +71,7 @@ const ExpensesSchema = z.array(
   })
 );
 
-type ExpenseSchemaType = z.infer<typeof ExpensesSchema>[number];
+type Expense = z.infer<typeof ExpensesSchema>[number];
 
 function parseDateRange(dateRange: unknown) {
   return DateRangeSchema.parse(dateRange);
@@ -81,18 +81,20 @@ function parseExpenses(expenses: unknown) {
   return ExpensesSchema.parse(expenses);
 }
 
-function transformExpensesData(expenses: string[][]): ExpenseSchemaType[] {
-  return expenses.map((expense) => {
-    const [timeStamp, title, nature, amount, type, paidFrom] = expense;
-    return {
-      timeStamp: format(new Date(timeStamp), "LLL dd, y h:mm a"),
-      title,
-      nature,
-      amount: parseFloat(amount),
-      type,
-      paidFrom,
-    };
-  });
+function transformExpensesData(expenses: string[][]): Expense[] {
+  return expenses
+    .map((expense) => {
+      const [timeStamp, title, nature, amount, type, paidFrom] = expense;
+      return {
+        timeStamp: format(new Date(timeStamp), "LLL dd, y h:mm a"),
+        title,
+        nature,
+        amount: parseFloat(amount),
+        type,
+        paidFrom,
+      };
+    })
+    .filter((expense) => expense.nature === "Debit");
 }
 
 function FilterExpense() {
@@ -179,7 +181,7 @@ function FilterExpense() {
 function FilteredExpenses({
   response,
 }: {
-  response: UseQueryResult<ExpenseSchemaType[]>;
+  response: UseQueryResult<Expense[]>;
 }) {
   if (response.isError) return <ErrorAlert />;
 
@@ -191,12 +193,20 @@ function FilteredExpenses({
   return <></>;
 }
 
-function DisplayFilteredExpenses({
-  expenses,
-}: {
-  expenses: ExpenseSchemaType[];
-}) {
-  const columns: ColumnDef<ExpenseSchemaType>[] = [
+function DisplayFilteredExpenses({ expenses }: { expenses: Expense[] }) {
+  function SortableHeader({ column, label }: { column: any; label: string }) {
+    return (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        {label}
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    );
+  }
+
+  const columns: ColumnDef<Expense>[] = [
     {
       accessorKey: "timeStamp",
       header: ({ column }) => <SortableHeader column={column} label="Time" />,
