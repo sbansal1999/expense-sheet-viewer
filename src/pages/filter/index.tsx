@@ -43,6 +43,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const inter = Inter({ subsets: ["latin"] });
+const FILTERED_EXPENSES_KEY = "filtered_expenses_key";
 
 export default function Filter() {
   return (
@@ -51,8 +52,6 @@ export default function Filter() {
     </main>
   );
 }
-
-const FILTERED_EXPENSES_KEY = "filtered_expenses_key";
 
 const DateRangeSchema = z.object({
   from: z.date(),
@@ -102,6 +101,14 @@ function FilterExpense() {
     to: new Date(),
   });
 
+  function getFilterExpenseURL(fromDate: Date, toDate: Date) {
+    return `/api/expenseBetweenDates?from=${fromDate.toISOString()}&to=${toDate.toISOString()}`;
+  }
+
+  function handleFetchData() {
+    filteredExpensesResponse.refetch();
+  }
+
   const filteredExpensesResponse = useQuery({
     queryKey: [FILTERED_EXPENSES_KEY],
     queryFn: async () => {
@@ -114,10 +121,6 @@ function FilterExpense() {
     },
     enabled: false,
   });
-
-  function handleFetchData() {
-    filteredExpensesResponse.refetch();
-  }
 
   return (
     <div className="m-4 flex flex-col gap-4">
@@ -323,21 +326,5 @@ function DisplayFilteredExpenses({
         </Button>
       </div>
     </div>
-  );
-}
-
-function getFilterExpenseURL(fromDate: Date, toDate: Date) {
-  return `/api/expenseBetweenDates?from=${fromDate.toISOString()}&to=${toDate.toISOString()}`;
-}
-
-function SortableHeader({ column, label }: { column: any; label: string }) {
-  return (
-    <Button
-      variant="ghost"
-      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    >
-      {label}
-      <ArrowUpDown className="ml-2 h-4 w-4" />
-    </Button>
   );
 }
