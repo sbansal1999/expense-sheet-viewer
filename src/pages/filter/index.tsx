@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import { cn } from "@/lib/utils";
+import { cn, getFormattedAmount } from "@/lib/utils";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import {
@@ -41,6 +41,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const inter = Inter({ subsets: ["latin"] });
 const FILTERED_EXPENSES_KEY = "filtered_expenses_key";
@@ -186,7 +187,12 @@ function FilteredExpenses({
   if (response.isError) return <ErrorAlert />;
 
   if (response.isSuccess)
-    return <DisplayFilteredExpenses expenses={response.data} />;
+    return (
+      <>
+        <DisplayFilteredExpenses expenses={response.data} />
+        <DisplayExpensesRelatedStats expenses={response.data} />
+      </>
+    );
 
   if (response.isLoading) return <LoadingState />;
 
@@ -336,5 +342,28 @@ function DisplayFilteredExpenses({ expenses }: { expenses: Expense[] }) {
         </Button>
       </div>
     </div>
+  );
+}
+
+function DisplayExpensesRelatedStats({ expenses }: { expenses: Expense[] }) {
+  return (
+    <>
+      <DisplayTotalSpent expenses={expenses} />
+    </>
+  );
+}
+
+function DisplayTotalSpent({ expenses }: { expenses: Expense[] }) {
+  const totalSpentInPaisa = expenses.reduce(
+    (currentSum, expense) => (currentSum += expense.amount * 100),
+    0
+  );
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Total spent during the above period:</CardTitle>
+      </CardHeader>
+      <CardContent>{getFormattedAmount(totalSpentInPaisa / 100)}</CardContent>
+    </Card>
   );
 }
