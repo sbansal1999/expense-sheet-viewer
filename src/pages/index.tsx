@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { ErrorAlert } from "@/components/ErrorAlert";
 import { LoadingState } from "@/components/LoadingState";
+import { getFormattedAmount } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 const LATEST_EXPENSE_KEY = "latest_expense";
@@ -90,6 +91,3 @@ function getFormattedDate(dateString: string) {
   }).format(new Date(dateString));
 }
 
-function getFormattedAmount(moneyString: string) {
-  return `₹ ${moneyString}`;
-}
