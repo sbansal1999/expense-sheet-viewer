@@ -74,6 +74,10 @@ const ExpensesSchema = z.array(
 
 type Expense = z.infer<typeof ExpensesSchema>[number];
 
+type ExpensesProp = {
+  expenses: Expense[];
+};
+
 function parseDateRange(dateRange: unknown) {
   return DateRangeSchema.parse(dateRange);
 }
@@ -199,7 +203,7 @@ function FilteredExpenses({
   return <></>;
 }
 
-function DisplayFilteredExpenses({ expenses }: { expenses: Expense[] }) {
+function DisplayFilteredExpenses({ expenses }: ExpensesProp) {
   function SortableHeader({ column, label }: { column: any; label: string }) {
     return (
       <Button
@@ -345,7 +349,7 @@ function DisplayFilteredExpenses({ expenses }: { expenses: Expense[] }) {
   );
 }
 
-function DisplayExpensesRelatedStats({ expenses }: { expenses: Expense[] }) {
+function DisplayExpensesRelatedStats({ expenses }: ExpensesProp) {
   return (
     <>
       <DisplayTotalSpent expenses={expenses} />
@@ -353,7 +357,7 @@ function DisplayExpensesRelatedStats({ expenses }: { expenses: Expense[] }) {
   );
 }
 
-function DisplayTotalSpent({ expenses }: { expenses: Expense[] }) {
+function DisplayTotalSpent({ expenses }: ExpensesProp) {
   const totalSpentInPaisa = expenses.reduce(
     (currentSum, expense) => (currentSum += expense.amount * 100),
     0
