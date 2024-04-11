@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import { cn, getFormattedAmount } from "@/lib/utils";
+import { cn, getFormattedAmount, roundOffDecimalPlaces } from "@/lib/utils";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import {
@@ -42,6 +42,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import ReactECharts from "echarts-for-react";
+import {
+  ComposeOption,
+  LegendComponentOption,
+  PieSeriesOption,
+  TitleComponentOption,
+  TooltipComponentOption,
+} from "echarts";
 
 const inter = Inter({ subsets: ["latin"] });
 const FILTERED_EXPENSES_KEY = "filtered_expenses_key";
@@ -353,6 +361,7 @@ function DisplayExpensesRelatedStats({ expenses }: ExpensesProp) {
   return (
     <>
       <DisplayTotalSpent expenses={expenses} />
+      <DisplaySpendingPatternChartByCategoy expenses={expenses} />
     </>
   );
 }
@@ -370,4 +379,45 @@ function DisplayTotalSpent({ expenses }: ExpensesProp) {
       <CardContent>{getFormattedAmount(totalSpentInPaisa / 100)}</CardContent>
     </Card>
   );
+}
+
+function DisplaySpendingPatternChartByCategoy({ expenses }: ExpensesProp) {
+  const sumsByTypeExceptRent = expenses.reduce((acc, transaction) => {
+    if (transaction.type === "Rent") return acc;
+    const { amount, type } = transaction;
+    acc[type] = (acc[type] || 0) + amount * 100;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const data = Object.entries(sumsByTypeExceptRent)
+    .map((val) => {
+      return {
+        name: val[0],
+        value: roundOffDecimalPlaces(val[1] / 100, 2),
+      };
+    })
+    .sort((a, b) => b.value - a.value);
+
+  type EChartsOption = ComposeOption<
+    | TitleComponentOption
+    | TooltipComponentOption
+    | LegendComponentOption
+    | PieSeriesOption
+  >;
+
+  const getOption = (): EChartsOption => {
+    return {
+      tooltip: {
+        trigger: "item",
+      },
+      series: [
+        {
+          type: "pie",
+          data,
+        },
+      ],
+    };
+  };
+
+  return <ReactECharts option={getOption()} theme="dark" />;
 }
