@@ -50,6 +50,7 @@ import {
   TitleComponentOption,
   TooltipComponentOption,
 } from "echarts";
+import { useTheme } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
 const FILTERED_EXPENSES_KEY = "filtered_expenses_key";
@@ -382,6 +383,7 @@ function DisplayTotalSpent({ expenses }: ExpensesProp) {
 }
 
 function DisplaySpendingPatternChartByCategoy({ expenses }: ExpensesProp) {
+  const { theme } = useTheme();
   const sumsByTypeExceptRent = expenses.reduce((acc, transaction) => {
     if (transaction.type === "Rent") return acc;
     const { amount, type } = transaction;
@@ -419,5 +421,5 @@ function DisplaySpendingPatternChartByCategoy({ expenses }: ExpensesProp) {
     };
   };
 
-  return <ReactECharts option={getOption()} theme="dark" />;
+  return <ReactECharts option={getOption()} theme={theme} />;
 }
