@@ -4,6 +4,7 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import {
   ColumnDef,
+  PaginationState,
   SortingState,
   VisibilityState,
   flexRender,
@@ -51,6 +52,13 @@ import {
   TooltipComponentOption,
 } from "echarts";
 import { useTheme } from "next-themes";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const inter = Inter({ subsets: ["latin"] });
 const FILTERED_EXPENSES_KEY = "filtered_expenses_key";
@@ -249,6 +257,10 @@ function DisplayFilteredExpenses({ expenses }: ExpensesProp) {
   ];
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
 
   const table = useReactTable({
     data: expenses,
@@ -258,9 +270,11 @@ function DisplayFilteredExpenses({ expenses }: ExpensesProp) {
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    onPaginationChange: setPagination,
     state: {
       sorting,
       columnVisibility,
+      pagination,
     },
   });
 
@@ -336,23 +350,46 @@ function DisplayFilteredExpenses({ expenses }: ExpensesProp) {
           )}
         </TableBody>
       </Table>
+
       <div className="flex items-center justify-center space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
+        <div className="flex-1 hidden md:block"></div>
+        <div className="flex-1 flex justify-center">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </Button>
+        </div>
+        <div className="flex-1 flex justify-end px-4">
+          <Select
+            value={`${table.getState().pagination.pageSize}`}
+            onValueChange={(value) => {
+              table.setPageSize(Number(value));
+            }}
+          >
+            <SelectTrigger className="h-8 w-[70px]">
+              <SelectValue placeholder={table.getState().pagination.pageSize} />
+            </SelectTrigger>
+            <SelectContent side="top">
+              {[10, 20, 30, 40, 50].map((pageSize) => (
+                <SelectItem key={pageSize} value={`${pageSize}`}>
+                  {pageSize}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </div>
   );
