@@ -11,15 +11,21 @@ import {
 import { ErrorAlert } from "@/components/ErrorAlert";
 import { LoadingState } from "@/components/LoadingState";
 import { getFormattedAmount } from "@/lib/utils";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 const LATEST_EXPENSE_KEY = "latest_expense";
 
 export default function Home() {
   return (
-    <main className={`${inter.className}`}>
-      <LatestExpense />
-    </main>
+    <div>
+      <Head>
+        <title>Expense Sheet Viewer - Latest Expense</title>
+      </Head>
+      <main className={`${inter.className}`}>
+        <LatestExpense />
+      </main>
+    </div>
   );
 }
 
