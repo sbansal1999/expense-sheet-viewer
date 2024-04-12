@@ -59,15 +59,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 const FILTERED_EXPENSES_KEY = "filtered_expenses_key";
 
 export default function Filter() {
   return (
-    <main className={`${inter.className}`}>
-      <FilterExpense />
-    </main>
+    <div>
+      <Head>
+        <title>Expense Sheet Viewer - Filter Expenses</title>
+      </Head>
+      <main className={`${inter.className}`}>
+        <FilterExpense />
+      </main>
+    </div>
   );
 }
 
