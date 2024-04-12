@@ -19,7 +19,7 @@ export default async function handler(
 
   const sheets = google.sheets({ version: "v4", auth });
 
-  const range = "'Form Responses 1'";
+  const range = "'For Backend'";
 
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SPREADSHEET_ID,
