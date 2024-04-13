@@ -1,0 +1,4 @@
+echo "Running Post Commit Hook..."
+echo "Pushing..."
+git push https://github.com/sbansal1999/expense-sheet-viewer.git HEAD -f
+echo "Finished Post Commit Hook..."
