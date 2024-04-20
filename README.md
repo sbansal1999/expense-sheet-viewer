@@ -92,7 +92,7 @@ Here is what you need to be able to run Cal.com.
 1. The `SPREADSHEET_ID` that is required in the `.env` file can be extracted from the Sheet URL. 
    
    For example, the spreadsheet ID in the URL https://docs.google.com/spreadsheets/d/abc1234567/edit#gid=0 is "abc1234567".
-   Populate the `.env ` file with this spreadsheet ID.
+   Populate the `.env` file with this spreadsheet ID.
      
 2. After filling the `.env` file all that's left is to give the Google Sheet access to the service account that was created earlier. The service account email address is in the `.env` file as `CLIENT_EMAIL`. More information on how you can do it [here](https://support.google.com/docs/answer/9331169?hl=en#6.1).
 
