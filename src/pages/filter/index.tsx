@@ -62,7 +62,7 @@ import {
 import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
-const FILTERED_EXPENSES_KEY = "filtered_expenses_key";
+const FILTERED_EXPENSES_KEY = "filtered_expenses";
 
 export default function Filter() {
   return (
@@ -140,7 +140,7 @@ function FilterExpense() {
   }
 
   const filteredExpensesResponse = useQuery({
-    queryKey: [FILTERED_EXPENSES_KEY],
+    queryKey: [FILTERED_EXPENSES_KEY, date],
     queryFn: async () => {
       const parsedDateRange = parseDateRange(date);
       const res = await axios.get(
