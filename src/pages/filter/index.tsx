@@ -3,6 +3,7 @@ import { cn, getFormattedAmount, roundOffDecimalPlaces } from "@/lib/utils";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import {
+  Column,
   ColumnDef,
   PaginationState,
   SortingState,
@@ -227,7 +228,7 @@ function FilteredExpenses({
 }
 
 function DisplayFilteredExpenses({ expenses }: ExpensesProp) {
-  function SortableHeader({ column, label }: { column: any; label: string }) {
+  function SortableHeader({ column, label }: { column: Column<Expense>; label: string }) {
     return (
       <Button
         variant="ghost"

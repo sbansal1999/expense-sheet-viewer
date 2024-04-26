@@ -1,5 +1,6 @@
+import fs from "fs";
+
 function populateENV() {
-  const fs = require("fs");
   let secrets;
 
   try {
