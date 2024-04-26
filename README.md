@@ -33,7 +33,7 @@ This is a NextJS application that can be used to analyze a [Google Sheets](https
 1. See the latest expense added to the sheet.
 1. Filter expenses on the basis of dates displaying a filtered expenses table and a pie chart.
 
-More coming soon...
+[More](#upcoming-features) coming soon...
 
 ## Directory Structure
 
@@ -124,6 +124,11 @@ Here is what you need to be able to run Cal.com.
 - [ ] Sorting of table on the basis of timestamp doesn't work properly due to it being considered a string. (on [/filters](https://expense-sheet-viewer.vercel.app/filter) page)
 - [ ] No proper loading component as of now.
 - [ ] When there are some empty fields in the middle of the last expense row, the empty rows are also shown. (on [/](https://expense-sheet-viewer.vercel.app) page).
+
+## Upcoming Features
+
+- [ ] Add detailed monthly expense analysis containing information like how expenses has increased/decreased over the months.
+- [ ] Add search functionality to search for a particular expense in the [/filters](https://expense-sheet-viewer.vercel.app/filter) page.
 
 
 
