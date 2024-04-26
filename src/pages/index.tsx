@@ -58,6 +58,8 @@ function LatestExpense() {
           </CardHeader>
           <CardContent>
             {data.lastRow.map((val: string, idx: number) => {
+              if (!val) return <></>;
+
               return (
                 <div
                   key={idx}
