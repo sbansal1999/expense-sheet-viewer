@@ -359,7 +359,7 @@ function DisplayFilteredExpenses({ expenses }: ExpensesProp) {
 
       <div className="flex items-center justify-center space-x-2 py-4">
         <div className="flex-1 hidden md:block"></div>
-        <div className="flex-1 flex justify-center">
+        <div className="flex-1 flex justify-center gap-2 lg:gap-4">
           <Button
             variant="outline"
             size="sm"
