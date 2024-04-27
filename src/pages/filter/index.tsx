@@ -456,9 +456,15 @@ function DisplaySpendingPatternChartByCategoy({ expenses }: ExpensesProp) {
       <CardHeader>
         <CardTitle>Spending pattern by category</CardTitle>
       </CardHeader>
-      <CardContent>
-        <p className="text-center">Excluding Rent</p>
-        <PieChart data={sumInPaisaByTypeExludingRent} />
+      <CardContent className="grid grid-cols-1 grid-rows-2 lg:grid-cols-2 lg:grid-rows-1">
+        <div>
+          <p className="text-center">Total Spending</p>
+          <PieChart data={sumInPaisaByType} />
+        </div>
+        <div>
+          <p className="text-center">Excluding Rent</p>
+          <PieChart data={sumInPaisaByTypeExludingRent} />
+        </div>
       </CardContent>
     </Card>
   );
