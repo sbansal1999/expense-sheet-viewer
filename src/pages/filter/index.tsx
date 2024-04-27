@@ -102,6 +102,11 @@ type ExpensesProp = {
   expenses: Expense[];
 };
 
+type ExpenseByCategory = {
+  name: string;
+  value: number;
+};
+
 function parseDateRange(dateRange: unknown) {
   return DateRangeSchema.parse(dateRange);
 }
@@ -427,21 +432,24 @@ function DisplayTotalSpent({ expenses }: ExpensesProp) {
 }
 
 function DisplaySpendingPatternChartByCategoy({ expenses }: ExpensesProp) {
-  const sumsByTypeExceptRent = expenses.reduce((acc, transaction) => {
-    if (transaction.type === "Rent") return acc;
-    const { amount, type } = transaction;
-    acc[type] = (acc[type] || 0) + amount * 100;
-    return acc;
-  }, {} as Record<string, number>);
+  const sumInPaisaByType = expenses
+    .reduce<ExpenseByCategory[]>((acc, expense) => {
+      const existing = acc.find((val) => val.name === expense.type);
+      if (existing) {
+        existing.value += expense.amount * 100;
+      } else {
+        acc.push({ name: expense.type, value: expense.amount * 100 });
+      }
+      return acc;
+    }, [])
+    .map((val) => ({
+      name: val.name,
+      value: roundOffDecimalPlaces(val.value / 100, 2),
+    }));
 
-  const data = Object.entries(sumsByTypeExceptRent)
-    .map((val) => {
-      return {
-        name: val[0],
-        value: roundOffDecimalPlaces(val[1] / 100, 2),
-      };
-    })
-    .sort((a, b) => b.value - a.value);
+  const sumInPaisaByTypeExludingRent = sumInPaisaByType.filter(
+    (val) => val.name !== "Rent"
+  );
 
   return (
     <Card>
@@ -450,7 +458,7 @@ function DisplaySpendingPatternChartByCategoy({ expenses }: ExpensesProp) {
       </CardHeader>
       <CardContent>
         <p className="text-center">Excluding Rent</p>
-        <PieChart data={data} />
+        <PieChart data={sumInPaisaByTypeExludingRent} />
       </CardContent>
     </Card>
   );
