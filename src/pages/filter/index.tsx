@@ -427,7 +427,6 @@ function DisplayTotalSpent({ expenses }: ExpensesProp) {
 }
 
 function DisplaySpendingPatternChartByCategoy({ expenses }: ExpensesProp) {
-  const { theme } = useTheme();
   const sumsByTypeExceptRent = expenses.reduce((acc, transaction) => {
     if (transaction.type === "Rent") return acc;
     const { amount, type } = transaction;
@@ -444,6 +443,11 @@ function DisplaySpendingPatternChartByCategoy({ expenses }: ExpensesProp) {
     })
     .sort((a, b) => b.value - a.value);
 
+  return <PieChart data={data} />;
+}
+
+function PieChart({ data }: { data: { name: string; value: number }[] }) {
+  const { theme } = useTheme();
   type EChartsOption = ComposeOption<
     | TitleComponentOption
     | TooltipComponentOption
