@@ -466,6 +466,7 @@ function PieChart({ data }: { data: { name: string; value: number }[] }) {
           data,
         },
       ],
+      backgroundColor: "transparent",
     };
   };
 
