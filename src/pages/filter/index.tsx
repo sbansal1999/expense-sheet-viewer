@@ -443,7 +443,17 @@ function DisplaySpendingPatternChartByCategoy({ expenses }: ExpensesProp) {
     })
     .sort((a, b) => b.value - a.value);
 
-  return <PieChart data={data} />;
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Spending pattern by category</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-center">Excluding Rent</p>
+        <PieChart data={data} />
+      </CardContent>
+    </Card>
+  );
 }
 
 function PieChart({ data }: { data: { name: string; value: number }[] }) {
