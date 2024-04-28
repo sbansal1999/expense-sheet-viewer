@@ -249,6 +249,12 @@ function DisplayFilteredExpenses({ expenses }: ExpensesProp) {
     {
       accessorKey: "timeStamp",
       header: ({ column }) => <SortableHeader column={column} label="Time" />,
+      sortingFn: (a, b) => {
+        return (
+          new Date(b.original.timeStamp).getTime() -
+          new Date(a.original.timeStamp).getTime()
+        );
+      },
     },
     {
       accessorKey: "title",
