@@ -21,7 +21,7 @@ export default function Home() {
     <div>
       <Head>
         <script
-        src="https://cdn.databuddy.cc/databuddy.js"
+          src="https://cdn.databuddy.cc/databuddy.js"
           data-client-id="84de170a-6dce-4801-889f-6dbdcf821289"
           data-track-hash-changes="true"
           data-track-attributes="true"
