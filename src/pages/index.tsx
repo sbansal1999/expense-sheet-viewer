@@ -20,6 +20,19 @@ export default function Home() {
   return (
     <div>
       <Head>
+        <script
+        src="https://cdn.databuddy.cc/databuddy.js"
+          data-client-id="84de170a-6dce-4801-889f-6dbdcf821289"
+          data-track-hash-changes="true"
+          data-track-attributes="true"
+          data-track-outgoing-links="true"
+          data-track-interactions="true"
+          data-track-scroll-depth="true"
+          data-track-web-vitals="true"
+          data-track-errors="true"
+          crossOrigin="anonymous"
+          async
+        ></script>
         <title>Expense Sheet Viewer - Latest Expense</title>
       </Head>
       <main className={`${inter.className}`}>
