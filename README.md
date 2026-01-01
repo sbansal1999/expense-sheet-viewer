@@ -22,10 +22,10 @@ This is a NextJS application that can be used to analyze a [Google Sheets](https
 
 ## Built With
 
-- [Next.js](https://nextjs.org/?ref=cal.com)
-- [React.js](https://reactjs.org/?ref=cal.com)
+- [Next.js](https://nextjs.org/)
+- [React.js](https://reactjs.org/)
 - [shadcn/ui](https://ui.shadcn.com/)
-- [Tailwind CSS](https://tailwindcss.com/?ref=cal.com)
+- [Tailwind CSS](https://tailwindcss.com/)
 - [Google Sheets API](https://developers.google.com/sheets/api/guides/concepts)
 
 ## Features
@@ -55,8 +55,6 @@ This project uses [NextJS pages router](https://nextjs.org/docs/pages) based dir
 To get a local copy up and running, please follow these simple steps.
 
 ### Pre-requisites
-
-Here is what you need to be able to run Cal.com.
 
 - [Node.js 18.17](https://nodejs.org/) or later.
 - A Google Sheets similar to [this](https://docs.google.com/spreadsheets/d/12vmkA6MIJa0RFHHOAKgubywgfdK-lDqH_nesfn1jWWg/edit?usp=sharing) one.
